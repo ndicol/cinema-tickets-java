@@ -16,6 +16,7 @@ To build the project from project run either of the flowing commands
 
 ## Note
 All solutions are implemented on `main` branch.
+Added pipeline job to run `maven verify`. If unable to run please check your permissions
 
 ## Assumptions
 In additon to the assumptions given on the exercise, The following assumptions were made since not explicitly given in the instructions

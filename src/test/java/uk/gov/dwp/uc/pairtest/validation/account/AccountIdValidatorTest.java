@@ -12,7 +12,7 @@ class AccountIdValidatorTest {
 
   private static final String VALIDATION_ERROR_MESSAGE = "Account ID is not valid";
   @Inject
-  TicketRequestIdValidator accountIdValidator;
+  TicketAccountIdValidator accountIdValidator;
 
   @ParameterizedTest
   @ValueSource(longs = {1L, 2L, 100L, 400L})

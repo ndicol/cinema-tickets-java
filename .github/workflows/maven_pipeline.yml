@@ -1,0 +1,22 @@
+name: Java CI with Maven
+
+on:
+  push:
+    branches: [ $default-branch, f-**, main]
+  pull_request:
+    branches: [ $default-branch ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17 x64
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          architecture: x64
+          cache: maven
+      - name: Build with Maven
+        run: mvn --batch-mode --update-snapshots --file pom.xml clean verify

@@ -11,7 +11,7 @@ import uk.gov.dwp.uc.pairtest.domain.validation.ValidationState;
  * Validation of account ID.
  */
 @ApplicationScoped
-public class TicketRequestIdValidator implements TicketRequestValidator {
+public class TicketAccountIdValidator implements TicketRequestValidator {
 
   @Inject
   Logger log;
@@ -32,7 +32,7 @@ public class TicketRequestIdValidator implements TicketRequestValidator {
       log.infov("accountId: {0} is valid", accountId);
       return new ValidationState(true, null);
     } else {
-      log.infov("accountId: {0} is invalid", accountId);
+      log.errorv("accountId: {0} is invalid", accountId);
       return new ValidationState(false, VALIDATION_ERROR_MESSAGE);
     }
   }
