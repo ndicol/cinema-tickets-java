@@ -5,10 +5,10 @@ import jakarta.inject.Inject;
 import java.util.Arrays;
 import java.util.List;
 import org.jboss.logging.Logger;
-import uk.gov.dwp.uc.pairtest.domain.TicketTypeRequest;
-import uk.gov.dwp.uc.pairtest.domain.Type;
+import uk.gov.dwp.uc.pairtest.domain.ticket.TicketTypeRequest;
+import uk.gov.dwp.uc.pairtest.domain.ticket.Type;
 import uk.gov.dwp.uc.pairtest.validation.TicketRequestValidator;
-import uk.gov.dwp.uc.pairtest.validation.ValidationState;
+import uk.gov.dwp.uc.pairtest.domain.validation.ValidationState;
 
 @ApplicationScoped
 public class TicketCombinationValidator implements TicketRequestValidator {
@@ -20,18 +20,18 @@ public class TicketCombinationValidator implements TicketRequestValidator {
   Logger log;
 
   /**
-   * Validates Child and Infant tickets includes an Adult ticket in the request.
+   * Validates Child and Infant tickets in the request has an associated Adult ticket.
    *
    * @param accountId          the account ID of ticket request to be validated
-   * @param ticketTypeRequests the ticket request to validate Child or Infant includes Adult ticket
-   * @return ValidationState with status equals true if number of tickets is 0 or less, else
+   * @param ticketTypeRequests the ticket request to validate Child or Infant tickets
+   * @return ValidationState with status equals true if associated Adult ticket is present, else
    * ValidationState with status of false and an error message
    */
   @Override
   public ValidationState validate(Long accountId, TicketTypeRequest... ticketTypeRequests) {
     List<Type> tickets = Arrays.stream(ticketTypeRequests).map(TicketTypeRequest::type).toList();
     log.infov(
-        "Checking that Child and Infant tickets have an associated Adult ticket for request with account ID: {0}",
+        "Checking that Child and Infant tickets in accountId: {0} request are associated to an Adult ticket",
         accountId);
     if ((tickets.contains(Type.CHILD) || tickets.contains(Type.INFANT)) && !tickets.contains(
         Type.ADULT)) {
@@ -41,7 +41,7 @@ public class TicketCombinationValidator implements TicketRequestValidator {
       return new ValidationState(false, VALIDATION_ERROR_MESSAGE);
     } else {
       log.infov(
-          "All Child or Infant tickets have corresponding Adult ticket for request with account ID: {0}",
+          "All Child and Infant tickets have corresponding Adult ticket for request with account ID: {0}",
           accountId);
       return new ValidationState(true, null);
     }

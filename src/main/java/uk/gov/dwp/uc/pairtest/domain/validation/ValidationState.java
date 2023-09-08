@@ -1,7 +1,7 @@
-package uk.gov.dwp.uc.pairtest.validation;
+package uk.gov.dwp.uc.pairtest.domain.validation;
 
 /**
- * Immutable object holding the validation state of the request.
+ * Immutable object holding the validation state of a purchase request.
  *
  * @param isValid true if pass validation, else false
  * @param message holds error message if fail validation

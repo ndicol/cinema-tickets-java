@@ -16,7 +16,7 @@
         <assertj-core.version>3.24.2</assertj-core.version>
         <surefire-plugin.version>3.1.2</surefire-plugin.version>
         <quarkus-platform.version>3.3.2</quarkus-platform.version>
-        <MutabilityDetector.version>0.10.6</MutabilityDetector.version>
+        <dependency-check-maven.version>8.3.1</dependency-check-maven.version>
     </properties>
 
     <dependencyManagement>
@@ -59,6 +59,23 @@
                     <release>17</release>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.owasp</groupId>
+                <artifactId>dependency-check-maven</artifactId>
+                <version>${dependency-check-maven.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <failBuildOnCVSS>4</failBuildOnCVSS>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire-plugin.version}</version>

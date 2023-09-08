@@ -4,10 +4,13 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import java.util.Arrays;
 import org.jboss.logging.Logger;
-import uk.gov.dwp.uc.pairtest.domain.TicketTypeRequest;
+import uk.gov.dwp.uc.pairtest.domain.ticket.TicketTypeRequest;
 import uk.gov.dwp.uc.pairtest.validation.TicketRequestValidator;
-import uk.gov.dwp.uc.pairtest.validation.ValidationState;
+import uk.gov.dwp.uc.pairtest.domain.validation.ValidationState;
 
+/**
+ * Validates correct quantity of tickets per request are purchased.
+ */
 @ApplicationScoped
 public class TicketQuantityValidator implements TicketRequestValidator {
 
@@ -22,7 +25,7 @@ public class TicketQuantityValidator implements TicketRequestValidator {
    *
    * @param accountId          The account ID of ticket request to be validated
    * @param ticketTypeRequests the ticket request to validate number of tickets
-   * @return ValidationState with status equals true if number of tickets is 0 or less, else
+   * @return ValidationState with status of true if number of tickets is 0 or less, else
    * ValidationState with status of false and an error message
    */
   @Override
@@ -38,7 +41,8 @@ public class TicketQuantityValidator implements TicketRequestValidator {
   }
 
   private boolean isValidTicketQuantity(TicketTypeRequest... ticketTypeRequests) {
-    int numberOfTickets = Arrays.stream(ticketTypeRequests).mapToInt(TicketTypeRequest::noOfTickets)
+    int numberOfTickets = Arrays.stream(ticketTypeRequests)
+        .mapToInt(TicketTypeRequest::noOfTickets)
         .sum();
     return MAXIMUM_NUMBER_OF_TICKETS >= numberOfTickets;
   }

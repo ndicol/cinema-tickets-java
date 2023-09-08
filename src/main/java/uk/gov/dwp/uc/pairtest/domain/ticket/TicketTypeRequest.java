@@ -1,9 +1,9 @@
-package uk.gov.dwp.uc.pairtest.domain;
+package uk.gov.dwp.uc.pairtest.domain.ticket;
 
 /**
  * Immutable TicketTypeRequest Object.
  * <p>
- * Number of tickets and their types.
+ * Number of tickets and their types
  */
 public record TicketTypeRequest(
     Type type,

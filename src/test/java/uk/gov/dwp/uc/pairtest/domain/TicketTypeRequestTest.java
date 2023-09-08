@@ -3,6 +3,8 @@ package uk.gov.dwp.uc.pairtest.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
+import uk.gov.dwp.uc.pairtest.domain.ticket.TicketTypeRequest;
+import uk.gov.dwp.uc.pairtest.domain.ticket.Type;
 
 class TicketTypeRequestTest {
 

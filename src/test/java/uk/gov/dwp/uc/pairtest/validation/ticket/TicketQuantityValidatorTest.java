@@ -6,8 +6,8 @@ import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import uk.gov.dwp.uc.pairtest.domain.TicketTypeRequest;
-import uk.gov.dwp.uc.pairtest.domain.Type;
+import uk.gov.dwp.uc.pairtest.domain.ticket.TicketTypeRequest;
+import uk.gov.dwp.uc.pairtest.domain.ticket.Type;
 
 @QuarkusTest
 class TicketQuantityValidatorTest {

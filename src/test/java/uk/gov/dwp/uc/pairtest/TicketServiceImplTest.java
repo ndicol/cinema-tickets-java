@@ -15,8 +15,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import thirdparty.paymentgateway.TicketPaymentService;
 import thirdparty.seatbooking.SeatReservationService;
-import uk.gov.dwp.uc.pairtest.domain.TicketTypeRequest;
-import uk.gov.dwp.uc.pairtest.domain.Type;
+import uk.gov.dwp.uc.pairtest.domain.ticket.TicketTypeRequest;
+import uk.gov.dwp.uc.pairtest.domain.ticket.Type;
 import uk.gov.dwp.uc.pairtest.exception.InvalidPurchaseException;
 
 @QuarkusTest
@@ -72,6 +72,5 @@ class TicketServiceImplTest {
     verifyNoInteractions(ticketPaymentService);
     verifyNoInteractions(seatReservationService);
   }
-
 
 }

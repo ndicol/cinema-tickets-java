@@ -1,8 +1,8 @@
 package uk.gov.dwp.uc.pairtest.validation;
 
 
-import jakarta.enterprise.context.ApplicationScoped;
-import uk.gov.dwp.uc.pairtest.domain.TicketTypeRequest;
+import uk.gov.dwp.uc.pairtest.domain.ticket.TicketTypeRequest;
+import uk.gov.dwp.uc.pairtest.domain.validation.ValidationState;
 
 public interface TicketRequestValidator {
 

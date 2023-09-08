@@ -11,12 +11,12 @@ import java.util.function.Predicate;
 import org.jboss.logging.Logger;
 import thirdparty.paymentgateway.TicketPaymentService;
 import thirdparty.seatbooking.SeatReservationService;
-import uk.gov.dwp.uc.pairtest.domain.TicketTypeRequest;
-import uk.gov.dwp.uc.pairtest.domain.Type;
+import uk.gov.dwp.uc.pairtest.domain.ticket.TicketTypeRequest;
+import uk.gov.dwp.uc.pairtest.domain.ticket.Type;
 import uk.gov.dwp.uc.pairtest.exception.InvalidPurchaseException;
 import uk.gov.dwp.uc.pairtest.repository.TicketRepository;
 import uk.gov.dwp.uc.pairtest.validation.TicketRequestValidator;
-import uk.gov.dwp.uc.pairtest.validation.ValidationState;
+import uk.gov.dwp.uc.pairtest.domain.validation.ValidationState;
 
 /**
  * TicketServiceImpl manages ticket purchasing.
@@ -66,20 +66,22 @@ public class TicketServiceImpl implements TicketService {
       }
     }
     if (!validationErrors.isEmpty()) {
-      throw new InvalidPurchaseException(validationErrors.get(0).message());
+      throw new InvalidPurchaseException(validationErrors.get(0).message()); // throws first error
+      // but can push all errors if required by returning for example a Response with the error list
     }
-    logger.infov("Calculating total number of seats for accountId: {0}", accountId);
+    logger.infov("Calculating total price for request with accountId: {0}", accountId);
     BigDecimal totalTicketCost = calculateTotalTicketPrice(
-        ticketTypeRequests); // for my own sanity, money calculations done with BigDecimal
+        ticketTypeRequests); // for my own sanity, money calculations were done in BigDecimal
     logger.infov("Total ticket cost for accountId: {0} is £{1}", accountId, totalTicketCost);
     logger.infov("Calculating total number of seats for accountId: {0}", accountId);
-    int totalSeatsToAllocate = calculateTotalSeatsToAllocate(
-        ticketTypeRequests);
+    int totalSeatsToAllocate = calculateTotalSeatsToAllocate(ticketTypeRequests);
     logger.infov("{0} seats to be allocated for accountId: {1}", totalSeatsToAllocate, accountId);
     try {
       ticketPaymentService.makePayment(accountId,
           totalTicketCost.intValue()); // totalTicketCost converted to int as TicketPaymentService must not be modified
       seatReservationService.reserveSeat(accountId, totalSeatsToAllocate);
+      logger.infov("Payments and seats reservation completed for request with accountId: {0}",
+          accountId);
     } catch (Exception exception) {
       throw new InvalidPurchaseException(
           "Error processing purchase for customer ID: %s".formatted(accountId));
